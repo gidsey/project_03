@@ -49,7 +49,7 @@ class Task(list):
                 break
 
     def add_time(self):
-        """Set the time spent in minutes."""
+        """Set the task time spent in minutes."""
         utilities.show_add_task_title()
         while True:
             try:
@@ -62,12 +62,29 @@ class Task(list):
                 continue
             else:
                 self.time = task_time
-                print('\nDate = {}'.format(self.date))
-                print('Name = {}'.format(self.name))
-                print('Time = {}'.format(self.time))
-                print()
+                self.add_notes()
                 break
 
+    def add_notes(self):
+        """Add notes to the task (optional)."""
+        utilities.show_add_task_title()
+        while True:
+            task_notes = str(input('\nAdd a note to this task? (optional): '))
+            if task_notes == '':
+                self.notes = None
+                self.print_output()
+                break
+            else:
+                self.notes = task_notes
+                self.print_output()
+                break
 
+    def print_output(self):
+        """debugging."""
+        print('\nDate = {}'.format(self.date))
+        print('Name = {}'.format(self.name))
+        print('Time = {}'.format(self.time))
+        print('Notes = {}'.format(self.notes))
+        print()
 
 

@@ -74,7 +74,7 @@ class Task(list):
             task_notes = str(input('\nAdd a note to this task? (optional): '))
             if task_notes == '':
                 self.notes = None
-                self.print_output()
+                self.add_entry()
                 break
             else:
                 self.notes = task_notes
@@ -105,6 +105,9 @@ class Task(list):
                     'task_notes': self.notes
                     })
         self.print_output()
+        input("The entry has been added. "
+              "Press ENTER to return to the main menu.")
+        print('yes!')
 
     def print_output(self):
         """debugging."""

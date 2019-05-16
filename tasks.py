@@ -1,5 +1,7 @@
 """Tasks."""
 import datetime
+import csv
+import os
 
 import utilities
 
@@ -76,8 +78,33 @@ class Task(list):
                 break
             else:
                 self.notes = task_notes
-                self.print_output()
+                self.add_entry()
                 break
+
+    def add_entry(self):
+        """Add the enytr to task.csv."""
+        fieldnames = [
+            'task_date',
+            'task_name',
+            'task_time',
+            'task_notes'
+        ]
+
+        file_exists = os.path.isfile('tasks.csv')
+        # check whether file exists
+        # ref: https://tinyurl.com/y67yexqj
+
+        with open('tasks.csv', 'a') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow({
+                    'task_date': self.date,
+                    'task_name': self.name,
+                    'task_time': self.time,
+                    'task_notes': self.notes
+                    })
+        self.print_output()
 
     def print_output(self):
         """debugging."""
@@ -86,5 +113,4 @@ class Task(list):
         print('Time = {}'.format(self.time))
         print('Notes = {}'.format(self.notes))
         print()
-
 

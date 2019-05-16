@@ -1,4 +1,5 @@
 """Work log main file."""
+
 import utilities
 
 from tasks import Task

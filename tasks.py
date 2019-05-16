@@ -32,20 +32,42 @@ class Task(list):
                 continue
             else:
                 self.date = task_date  # Set the date
-                self.get_task_name()
+                self.add_name()
                 break
 
-    def get_task_name(self):
+    def add_name(self):
         """Set the task name."""
         utilities.show_add_task_title()
         while True:
             task_name = str(input('\nWhat is the name of the task? '))
             if task_name == '':
-                print("sorry, task name cannot be blank.")
+                print("sorry, task name cannot be blank.\n")
                 continue
             else:
                 self.name = task_name
-                print('Date = {}'.format(self.date))
-                print('Name = {}'.format(self.name))
+                self.add_time()
                 break
+
+    def add_time(self):
+        """Set the time spent in minutes."""
+        utilities.show_add_task_title()
+        while True:
+            try:
+                task_time = int(input("\nTime spend on task "
+                                      "(rounded minutes): "))
+            except ValueError:
+                utilities.show_add_task_title()
+                print("Error. Please enter the number of minutes "
+                      "as a whole number.\n")
+                continue
+            else:
+                self.time = task_time
+                print('\nDate = {}'.format(self.date))
+                print('Name = {}'.format(self.name))
+                print('Time = {}'.format(self.time))
+                print()
+                break
+
+
+
 

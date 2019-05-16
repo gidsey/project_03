@@ -20,4 +20,4 @@ def show_main_menu_options():
 def show_add_task_title():
     """Print the main menu options."""
     clear_screen()
-    print('\nWork Log : Add a task'.upper()+'\n'+'-'*24)
+    print('\nWork Log : Add a task'.upper()+'\n'+'-'*22)

@@ -5,6 +5,7 @@ import os
 
 import utilities
 
+
 fmt = '%d/%m/%Y'
 
 
@@ -105,9 +106,10 @@ class Task(list):
                     'task_notes': self.notes
                     })
         self.print_output()
-        input("The entry has been added. "
+        input("The above entry has been added. "
               "Press ENTER to return to the main menu.")
-        print('yes!')
+        from work_log import main_menu
+        main_menu()
 
     def print_output(self):
         """debugging."""

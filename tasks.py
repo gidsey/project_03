@@ -9,16 +9,6 @@ import utilities
 fmt = '%d/%m/%Y'
 
 
-class Search(list):
-    """Define the Serach class."""
-
-    def __init__(self, query):
-        """Customize the class init."""
-        self.query = query
-
-
-
-
 class Task(list):
     """Define the Task class."""
 

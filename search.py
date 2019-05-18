@@ -40,7 +40,6 @@ class Search(list):
 
     def show_results(self):
         """Show the serach results."""
-        from work_log import search_menu
         utilities.show_add_task_title()
         f_date = datetime.datetime.strptime(
              self.results[self.count]['task_date'],
@@ -52,26 +51,38 @@ class Search(list):
         print('Time Spent (minutes): {}'.
               format(self.results[self.count]['task_time']))
         print('Notes: {}'.format(self.results[self.count]['task_notes']))
+        self.show_results_menu()
 
-        selction = input('\n[N]ext, [E]dit, [D]elete, '
-                         '[R]eturn to seach menu > ')
+    def show_results_menu(self):
+        """Show the results options."""
+        from work_log import search_menu
 
-        if selction.upper() == 'N':
-            try:
-                self.count += 1
-                self.show_results()
-            except IndexError:
-                utilities.show_add_task_title()
-                self.count = len(self.results)
-                input('\nNo more results to show.\n'
-                      'Press ENTER to return to the search menu.')
+        while True:
+            selction = input('\n[N]ext, [E]dit, [D]elete, '
+                             '[R]eturn to seach menu > ')
+
+            if selction.upper() == 'N':
+                try:
+                    self.count += 1
+                    self.show_results()
+                    break
+                except IndexError:
+                    utilities.show_add_task_title()
+                    input('\nNo more results to show.\n\n'
+                          'Press ENTER to return to the search menu.')
+                    search_menu()
+                    break
+
+            if selction.upper() == 'E':
+                pass
+
+            if selction.upper() == 'D':
+                pass
+
+            if selction.upper() == 'R':
                 search_menu()
+            else:
+                # self.show_results_menu()
+                print("\nSorry, we did not recoginse '{}'"
+                      ", please try again.".format(selction))
 
-        if selction.upper() == 'E':
-            pass
-
-        if selction.upper() == 'D':
-            pass
-
-        if selction.upper() == 'R':
-            search_menu()

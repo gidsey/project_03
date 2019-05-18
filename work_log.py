@@ -1,6 +1,5 @@
 """Work log main file."""
 
-import csv
 import datetime
 
 import utilities
@@ -30,7 +29,7 @@ def main_menu():
         else:
             utilities.show_main_menu_options()
             print("\nSorry, we did not recoginse '{}'"
-                  ", plasee try again.".format(selction))
+                  ", please try again.".format(selction))
 
 
 def add_new_task():
@@ -64,6 +63,10 @@ def search_menu():
         if selction.upper() == 'F':
             main_menu()
             break
+        else:
+            utilities.show_search_menu_options()
+            print("\nSorry, we did not recoginse '{}'"
+                  ", please try again.".format(selction))
 
 
 def serach_date():

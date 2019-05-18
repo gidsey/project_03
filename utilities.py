@@ -31,6 +31,6 @@ def show_search_menu_options():
     print('a) Exact date')
     print('b) Range of dates')
     print('c) Time spent')
-    print('d) Exact search')
+    print('d) Text search')
     print('e) RegEx pattern')
     print('f) [Return to main menu]')

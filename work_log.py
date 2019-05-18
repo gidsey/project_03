@@ -45,22 +45,22 @@ def search_menu():
     while True:
         selction = input("\nEnter 'a', 'b', 'c', 'd', 'e' or 'f' > ")
 
-        if selction.upper() == 'A':
-            serach_date()
+        if selction.upper() == 'A':  # Date search
+            search_date()
             break
-        if selction.upper() == 'B':
+        if selction.upper() == 'B':  # Range search
             print('B')
             break
-        if selction.upper() == 'C':
-            print('C')
+        if selction.upper() == 'C':  # Time search
+            search_time()
             break
-        if selction.upper() == 'D':
+        if selction.upper() == 'D':  # Text search
             print('D')
             break
-        if selction.upper() == 'E':
+        if selction.upper() == 'E':  # RegEx search
             print('E')
             break
-        if selction.upper() == 'F':
+        if selction.upper() == 'F':  # Return to menu
             main_menu()
             break
         else:
@@ -69,11 +69,11 @@ def search_menu():
                   ", please try again.".format(selction))
 
 
-def serach_date():
-    """Serach by exact date."""
+def search_date():
+    """Search by exact date."""
     utilities.show_add_task_title()
     while True:
-        search_input = input("\nEnter the date that you wish to serach for.\n"
+        search_input = input("\nEnter the date that you wish to search for.\n"
                              "Please use 'DD/MM/YYYY format: ")
         try:
             search_input = datetime.datetime.strptime(search_input, fmt)
@@ -86,6 +86,25 @@ def serach_date():
             s = Search()
             s.date_search(search_input)
             break
+
+
+def search_time():
+    """Search duration in minutes."""
+    utilities.show_add_task_title()
+    while True:
+        search_input = input("\nEnter the time spent in whole minutes: ")
+        try:
+            search_input = int(search_input)
+        except ValueError:
+            utilities.show_add_task_title()
+            print("\nSorry '{}' is not in the correct format. "
+                  "Please try again.\n".format(search_input))
+            continue
+        else:
+            s = Search()
+            s.time_search(search_input)
+            break
+
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ def friendly_date(datein):
 
 
 class Search(list):
-    """Define the Serach class."""
+    """Define the Search class."""
 
     def __init__(self, ):
         """Customize the class init."""
@@ -23,7 +23,7 @@ class Search(list):
         # self.num_results = 0
 
     def date_search(self, exact_date):
-        """Serach for an exact date match."""
+        """Search for an exact date match."""
         self.exact_date = exact_date
         with open('tasks.csv', newline='') as csvfile:
             taskreader = csv.DictReader(csvfile, delimiter=',')
@@ -36,10 +36,27 @@ class Search(list):
             else:
                 utilities.show_add_task_title()
                 print('\nThere are no tasks listed for {}'.
-                      format(friendly_date(exact_date)))
+                      format(friendly_date(exact_date)))  # this needs to be in a loop
+
+    def time_search(self, duration):
+        """Serach for an exact duration match."""
+        self.duration = duration
+        with open('tasks.csv', newline='') as csvfile:
+            taskreader = csv.DictReader(csvfile, delimiter=',')
+            rows = list(taskreader)
+            for row in rows[0:len(rows)]:
+                if row['task_time'] == str(duration):
+                    self.results.append(row)
+            if self.results:
+                self.show_results()
+            else:
+                utilities.show_add_task_title()
+                print('\nSorry, There are no tasks listed for with a duration '
+                      'of {} minutes Press ENTER to return to the'
+                      'search menu.').format(duration)  # this needs to be in a loop
 
     def show_results(self):
-        """Show the serach results."""
+        """Show the search results."""
         utilities.show_add_task_title()
         f_date = datetime.datetime.strptime(
              self.results[self.count]['task_date'],
@@ -58,6 +75,7 @@ class Search(list):
         from work_log import search_menu
 
         while True:
+
             selction = input('\n[N]ext, [E]dit, [D]elete, '
                              '[R]eturn to seach menu > ')
 
@@ -81,8 +99,8 @@ class Search(list):
 
             if selction.upper() == 'R':
                 search_menu()
+                break
             else:
-                # self.show_results_menu()
-                print("\nSorry, we did not recoginse '{}'"
-                      ", please try again.".format(selction))
+                self.show_results()
+                break
 

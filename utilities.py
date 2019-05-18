@@ -13,7 +13,7 @@ def show_main_menu_options():
     print('\nWork Log : Main Menu'.upper()+'\n'+'-'*20)
     print('What would you like to do?\n')
     print('a) Add a new entry')
-    print('b) Serach the existing entries')
+    print('b) Search the existing entries')
     print('c) Quit')
 
 
@@ -34,4 +34,3 @@ def show_search_menu_options():
     print('d) Exact search')
     print('e) RegEx pattern')
     print('f) [Return to main menu]')
-

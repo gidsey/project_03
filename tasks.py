@@ -9,6 +9,16 @@ import utilities
 fmt = '%d/%m/%Y'
 
 
+class Search(list):
+    """Define the Serach class."""
+
+    def __init__(self, query):
+        """Customize the class init."""
+        self.query = query
+
+
+
+
 class Task(list):
     """Define the Task class."""
 
@@ -118,4 +128,3 @@ class Task(list):
         print('Time = {}'.format(self.time))
         print('Notes = {}'.format(self.notes))
         print()
-

@@ -5,6 +5,8 @@ import datetime
 
 import utilities
 from tasks import Task
+from search import Search
+
 
 fmt = '%d/%m/%Y'
 
@@ -19,7 +21,7 @@ def main_menu():
             add_new_task()
             break
         if selction.upper() == 'B':
-            go_search()
+            search_menu()
             break
         if selction.upper() == 'C':
             utilities.clear_screen()
@@ -37,7 +39,7 @@ def add_new_task():
     t.add_date()
 
 
-def go_search():
+def search_menu():
     """Show the serach menu."""
     utilities.show_search_menu_options()
 
@@ -78,27 +80,9 @@ def serach_date():
                   "Please try again.\n".format(search_input))
             continue
         else:
-            search(search_input)
+            s = Search()
+            s.date_search(search_input)
             break
-
-
-def search(exact_date):
-    """Return the serach results."""
-    results = []
-    exact_date_freindly = datetime.datetime.strftime(exact_date, fmt)
-    with open('tasks.csv', newline='') as csvfile:
-        taskreader = csv.DictReader(csvfile, delimiter=',')
-        rows = list(taskreader)
-        for row in rows[0:len(rows)]:
-            if row['task_date'] == str(exact_date):
-                results.append(row)
-        if results:
-            utilities.show_add_task_title()
-            print('\nThere are {} tasks listed for {}:'
-                  .format(len(results), exact_date_freindly))
-        else:
-            utilities.show_add_task_title()
-            print('\nThere are no tasks listed for {}'.format(exact_date_freindly))
 
 
 if __name__ == "__main__":

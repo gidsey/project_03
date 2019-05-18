@@ -30,7 +30,7 @@ class Task(list):
                 task_date = datetime.datetime.strptime(task_date, fmt)
             except ValueError:
                 utilities.show_add_task_title()
-                print("Sorry '{}' is not in the correct date format. "
+                print("\nSorry '{}' is not in the correct date format. "
                       "Please try again.\n".format(task_date))
                 continue
             else:

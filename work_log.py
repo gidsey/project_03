@@ -66,14 +66,39 @@ def go_search():
 
 def serach_date():
     """Serach by exact date."""
-    # search_input = datetime.datetime.strptime('1969-05-31 00:00:00', fmt)
+    utilities.show_add_task_title()
+    while True:
+        search_input = input("\nEnter the date that you wish to serach for.\n"
+                             "Please use 'DD/MM/YYYY format: ")
+        try:
+            search_input = datetime.datetime.strptime(search_input, fmt)
+        except ValueError:
+            utilities.show_add_task_title()
+            print("\nSorry '{}' is not in the correct date format. "
+                  "Please try again.\n".format(search_input))
+            continue
+        else:
+            search(search_input)
+            break
 
+
+def search(exact_date):
+    """Return the serach results."""
+    results = []
+    exact_date_freindly = datetime.datetime.strftime(exact_date, fmt)
     with open('tasks.csv', newline='') as csvfile:
         taskreader = csv.DictReader(csvfile, delimiter=',')
         rows = list(taskreader)
         for row in rows[0:len(rows)]:
-            if row['task_date'] == '1969-05-31 00:00:00':
-                print(row)
+            if row['task_date'] == str(exact_date):
+                results.append(row)
+        if results:
+            utilities.show_add_task_title()
+            print('\nThere are {} tasks listed for {}:'
+                  .format(len(results), exact_date_freindly))
+        else:
+            utilities.show_add_task_title()
+            print('\nThere are no tasks listed for {}'.format(exact_date_freindly))
 
 
 if __name__ == "__main__":

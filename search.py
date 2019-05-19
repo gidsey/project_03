@@ -34,9 +34,12 @@ class Search(list):
             if self.results:
                 self.show_results()
             else:
+                from work_log import search_menu
                 utilities.show_add_task_title()
-                print('\nThere are no tasks listed for {}'.
-                      format(friendly_date(exact_date)))  # this needs to be in a loop
+                input('\nSorry, there are no tasks listed for {}\n\n'
+                      'Press ENTER to return to the search menu.'.format(
+                       friendly_date(exact_date)))
+                search_menu()
 
     def time_search(self, duration):
         """Serach for an exact duration match."""
@@ -50,10 +53,12 @@ class Search(list):
             if self.results:
                 self.show_results()
             else:
+                from work_log import search_menu
                 utilities.show_add_task_title()
-                print('\nSorry, There are no tasks listed for with a duration '
-                      'of {} minutes Press ENTER to return to the'
-                      'search menu.').format(duration)  # this needs to be in a loop
+                input('\nSorry, there are no tasks listed for with a duration '
+                      'of {} minutes.\n\nPress ENTER to return to the '
+                      'search menu.'.format(duration))
+                search_menu()
 
     def show_results(self):
         """Show the search results."""

@@ -24,7 +24,7 @@ def main_menu():
             break
         if selction.upper() == 'C':
             utilities.clear_screen()
-            print('\nThanks for using WORK LOG!\n')
+            print('\nThanks for using WORK LOG :)\n')
             break
         else:
             utilities.show_main_menu_options()
@@ -55,7 +55,7 @@ def search_menu():
             search_time()
             break
         if selction.upper() == 'D':  # Text search
-            print('D')
+            search_text()
             break
         if selction.upper() == 'E':  # RegEx search
             print('E')
@@ -105,6 +105,23 @@ def search_time():
             s.time_search(search_input)
             break
 
+
+def search_text():
+    """Search the text in task name and notes."""
+    utilities.show_add_task_title()
+    while True:
+        search_input = input("\nEnter the text to serach for: ")
+        try:
+            search_input = str(search_input)
+        except ValueError:
+            utilities.show_add_task_title()
+            print("\nSorry '{}' is not in the correct format. "
+                  "Please try again.\n".format(search_input))
+            continue
+        else:
+            s = Search()
+            s.text_search(search_input)
+            break
 
 
 if __name__ == "__main__":

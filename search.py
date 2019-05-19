@@ -60,6 +60,26 @@ class Search(list):
                       'search menu.'.format(duration))
                 search_menu()
 
+    def text_search(self, text):
+        """Serach for an exact text match."""
+        self.text = text
+        with open('tasks.csv', newline='') as csvfile:
+            taskreader = csv.DictReader(csvfile, delimiter=',')
+            rows = list(taskreader)
+            for row in rows[0:len(rows)]:
+                if self.text.lower() in row['task_name'].lower() or \
+                        self.text.lower() in row['task_notes'].lower():
+                    self.results.append(row)
+            if self.results:
+                self.show_results()
+            else:
+                from work_log import search_menu
+                utilities.show_add_task_title()
+                input("\nSorry, there are no tasks listed that include "
+                      "'{}'.\n\nPress ENTER to return to the "
+                      "search menu.".format(self.text))
+                search_menu()
+
     def show_results(self):
         """Show the search results."""
         utilities.show_add_task_title()

@@ -112,9 +112,9 @@ class Task(list):
         main_menu()
 
     def print_output(self):
-        """debugging."""
-        print('\nDate = {}'.format(self.date))
-        print('Name = {}'.format(self.name))
-        print('Time = {}'.format(self.time))
-        print('Notes = {}'.format(self.notes))
+        """Show the task on screen."""
+        print('\nDate: {}'.format(datetime.datetime.strftime(self.date, fmt)))
+        print('Task: = {}'.format(self.name))
+        print('Time (minutes): = {}'.format(self.time))
+        print('Notes: {}'.format(self.notes))
         print()

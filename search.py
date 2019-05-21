@@ -1,6 +1,7 @@
 """Search."""
 import datetime
 import csv
+import re
 # import os
 
 import utilities
@@ -25,7 +26,6 @@ class Search(list):
             taskreader = csv.DictReader(csvfile, delimiter=',')
             self.dataset = list(taskreader)
         self.numtasks = len(self.dataset)
-
 
     def date_search(self, exact_date):
         """Search for an exact date match."""
@@ -73,21 +73,23 @@ class Search(list):
                   "search menu.".format(text))
             search_menu()
 
-    def pattern_search(self, text):
+    def pattern_search(self, pattern):
         """Serach for an exact text match."""
-        for row in self.dataset[0:self.numtasks]:
-            if pattern in row['task_name'] or \
-                    pattern in row['task_notes']:
-                self.results.append(row)
+        expr = re.compile(r'''
+    ^(?P<name>(?P<last>[-\w ]*),\s(?P<first>[-\w ]+))\t$ 
+''', re.X | re.M)
+
+        for match in expr.finditer(self.dataset):
+            self.results.append.append(match)
         if self.results:
             self.show_results()
         else:
             from work_log import search_menu
             utilities.show_add_task_title()
-            input("\nSorry, there are no tasks listed that include "
-                  "'{}'.\n\nPress ENTER to return to the "
-                  "search menu.".format(text))
+            input("\nSorry, there are no tasks listed that match that {}} "
+                  "\n\nPress ENTER to return to the search menu.".format(pattern))
             search_menu()
+
 
     def show_results(self):
         """Show the search results."""

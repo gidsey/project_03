@@ -73,6 +73,22 @@ class Search(list):
                   "search menu.".format(text))
             search_menu()
 
+    def pattern_search(self, text):
+        """Serach for an exact text match."""
+        for row in self.dataset[0:self.numtasks]:
+            if pattern in row['task_name'] or \
+                    pattern in row['task_notes']:
+                self.results.append(row)
+        if self.results:
+            self.show_results()
+        else:
+            from work_log import search_menu
+            utilities.show_add_task_title()
+            input("\nSorry, there are no tasks listed that include "
+                  "'{}'.\n\nPress ENTER to return to the "
+                  "search menu.".format(text))
+            search_menu()
+
     def show_results(self):
         """Show the search results."""
         utilities.show_add_task_title()

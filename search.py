@@ -20,65 +20,58 @@ class Search(list):
         """Customize the class init."""
         self.results = []
         self.count = 0
-        # self.num_results = 0
+        # Read the CSV file and store conetnt in a list
+        with open('tasks.csv', newline='') as csvfile: 
+            taskreader = csv.DictReader(csvfile, delimiter=',')
+            self.dataset = list(taskreader)
+        self.numtasks = len(self.dataset)
+
 
     def date_search(self, exact_date):
         """Search for an exact date match."""
-        self.exact_date = exact_date
-        with open('tasks.csv', newline='') as csvfile:
-            taskreader = csv.DictReader(csvfile, delimiter=',')
-            rows = list(taskreader)
-            for row in rows[0:len(rows)]:
-                if row['task_date'] == str(exact_date):
-                    self.results.append(row)
-            if self.results:
-                self.show_results()
-            else:
-                from work_log import search_menu
-                utilities.show_add_task_title()
-                input('\nSorry, there are no tasks listed for {}\n\n'
-                      'Press ENTER to return to the search menu.'.format(
-                       friendly_date(exact_date)))
-                search_menu()
+        for row in self.dataset[0:self.numtasks]:
+            if row['task_date'] == str(exact_date):
+                self.results.append(row)
+        if self.results:
+            self.show_results()
+        else:
+            from work_log import search_menu
+            utilities.show_add_task_title()
+            input('\nSorry, there are no tasks listed for {}\n\n'
+                  'Press ENTER to return to the search menu.'.format(
+                   friendly_date(exact_date)))
+            search_menu()
 
     def time_search(self, duration):
         """Serach for an exact duration match."""
-        self.duration = duration
-        with open('tasks.csv', newline='') as csvfile:
-            taskreader = csv.DictReader(csvfile, delimiter=',')
-            rows = list(taskreader)
-            for row in rows[0:len(rows)]:
-                if row['task_time'] == str(duration):
-                    self.results.append(row)
-            if self.results:
-                self.show_results()
-            else:
-                from work_log import search_menu
-                utilities.show_add_task_title()
-                input('\nSorry, there are no tasks listed for with a duration '
-                      'of {} minutes.\n\nPress ENTER to return to the '
-                      'search menu.'.format(duration))
-                search_menu()
+        for row in self.dataset[0:self.numtasks]:
+            if row['task_time'] == str(duration):
+                self.results.append(row)
+        if self.results:
+            self.show_results()
+        else:
+            from work_log import search_menu
+            utilities.show_add_task_title()
+            input('\nSorry, there are no tasks listed for with a duration '
+                  'of {} minutes.\n\nPress ENTER to return to the '
+                  'search menu.'.format(duration))
+            search_menu()
 
     def text_search(self, text):
         """Serach for an exact text match."""
-        self.text = text
-        with open('tasks.csv', newline='') as csvfile:
-            taskreader = csv.DictReader(csvfile, delimiter=',')
-            rows = list(taskreader)
-            for row in rows[0:len(rows)]:
-                if self.text.lower() in row['task_name'].lower() or \
-                        self.text.lower() in row['task_notes'].lower():
-                    self.results.append(row)
-            if self.results:
-                self.show_results()
-            else:
-                from work_log import search_menu
-                utilities.show_add_task_title()
-                input("\nSorry, there are no tasks listed that include "
-                      "'{}'.\n\nPress ENTER to return to the "
-                      "search menu.".format(self.text))
-                search_menu()
+        for row in self.dataset[0:self.numtasks]:
+            if text.lower() in row['task_name'].lower() or \
+                    text.lower() in row['task_notes'].lower():
+                self.results.append(row)
+        if self.results:
+            self.show_results()
+        else:
+            from work_log import search_menu
+            utilities.show_add_task_title()
+            input("\nSorry, there are no tasks listed that include "
+                  "'{}'.\n\nPress ENTER to return to the "
+                  "search menu.".format(text))
+            search_menu()
 
     def show_results(self):
         """Show the search results."""

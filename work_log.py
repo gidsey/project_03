@@ -113,7 +113,7 @@ def search_daterange():
                       "Please try again.".format(end_date))
                 continue
             else:
-                #swap the values if required
+                # swap the values if required
                 if start_date >= end_date:
                     start_date, end_date = end_date, start_date
                 s = Search()

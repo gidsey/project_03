@@ -146,7 +146,8 @@ class Search(list):
                 pass
 
             if selction.upper() == 'D':
-                pass
+                print(self.results[self.count])
+                break
 
             if selction.upper() == 'R':
                 search_menu()

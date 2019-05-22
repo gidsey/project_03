@@ -18,15 +18,27 @@ def show_main_menu_options():
 
 
 def show_add_task_title():
-    """Print the main menu options."""
+    """Print the add task title."""
     clear_screen()
     print('\nWork Log : Add a task'.upper()+'\n'+'-'*22)
+
+
+def show_results_title():
+    """Print the results title."""
+    clear_screen()
+    print('\nWork Log : Search Results'.upper()+'\n'+'-'*26)
+
+
+def show_serach_title():
+    """Print the search title."""
+    clear_screen()
+    print('\nWork Log : Search'.upper()+'\n'+'-'*18)
 
 
 def show_search_menu_options():
     """Print the main menu options."""
     clear_screen()
-    print('\nWork Log : Search Menu'.upper()+'\n'+'-'*20)
+    print('\nWork Log : Search'.upper()+'\n'+'-'*18)
     print('What do you want to search by:\n')
     print('a) Exact date')
     print('b) Range of dates')

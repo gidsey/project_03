@@ -36,17 +36,27 @@ class Search(list):
             self.show_results()
         else:
             from work_log import search_menu
-            utilities.show_add_task_title()
+            utilities.show_results_title()
             input('\nSorry, there are no tasks listed for {}\n\n'
                   'Press ENTER to return to the search menu.'.format(
                    friendly_date(exact_date)))
             search_menu()
 
-    def range_search(self, range):
+    def range_search(self, start_date, end_date, range):
         """Serach accross a date range."""
-
-
-
+        for row in self.dataset[0:self.numtasks]:
+            task_date = datetime.datetime.strptime(
+             row['task_date'], '%Y-%m-%d %H:%M:%S')
+            if start_date - range <= task_date <= start_date + range:
+                self.results.append(row)
+        if self.results:
+            self.show_results()
+        else:
+            from work_log import search_menu
+            utilities.show_results_title()
+            input('\nSorry, there are no tasks listed within that date range.\n\n'
+                  'Press ENTER to return to the search menu.')
+            search_menu()
 
     def time_search(self, duration):
         """Serach for an exact duration match."""
@@ -57,7 +67,7 @@ class Search(list):
             self.show_results()
         else:
             from work_log import search_menu
-            utilities.show_add_task_title()
+            utilities.show_results_title()
             input('\nSorry, there are no tasks listed for with a duration '
                   'of {} minutes.\n\nPress ENTER to return to the '
                   'search menu.'.format(duration))
@@ -73,7 +83,7 @@ class Search(list):
             self.show_results()
         else:
             from work_log import search_menu
-            utilities.show_add_task_title()
+            utilities.show_results_title()
             input("\nSorry, there are no tasks listed that include "
                   "'{}'.\n\nPress ENTER to return to the "
                   "search menu.".format(text))
@@ -90,7 +100,7 @@ class Search(list):
             self.show_results()
         else:
             from work_log import search_menu
-            utilities.show_add_task_title()
+            utilities.show_results_title()
             input("\nSorry, there are no tasks listed that match the pattern"
                   "'{}'.\n\nPress ENTER to return to the "
                   "search menu.".format(pattern))
@@ -98,7 +108,7 @@ class Search(list):
 
     def show_results(self):
         """Show the search results."""
-        utilities.show_add_task_title()
+        utilities.show_results_title()
         f_date = datetime.datetime.strptime(
              self.results[self.count]['task_date'],
              '%Y-%m-%d %H:%M:%S')
@@ -126,7 +136,7 @@ class Search(list):
                     self.show_results()
                     break
                 except IndexError:
-                    utilities.show_add_task_title()
+                    utilities.show_results_title()
                     input('\nNo more results to show.\n\n'
                           'Press ENTER to return to the search menu.')
                     search_menu()

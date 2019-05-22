@@ -21,3 +21,5 @@ task_date,task_name,task_time,task_notes
 1019-05-20 00:00:00,Visit London with Laura,600,Martin Parr!
 1019-05-22 00:00:00,This task is number 8149.,60,RegEx test
 2019-05-22 00:00:00,Unimaginatively titled task,10,This task has a word wth 15 characters included.
+1800-01-01 00:00:00,new year's day 1800,24,NYD
+1800-02-01 00:00:00,1 Feb 1800,40,Feb 1800

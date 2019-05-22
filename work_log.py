@@ -71,7 +71,7 @@ def search_menu():
 
 def search_date():
     """Search by exact date."""
-    utilities.show_add_task_title()
+    utilities.show_serach_title()
     while True:
         search_input = input("\nEnter the date that you wish to search for.\n"
                              "Please use 'DD/MM/YYYY format: ")
@@ -90,7 +90,7 @@ def search_date():
 
 def search_daterange():
     """Search by date range."""
-    utilities.show_add_task_title()
+    utilities.show_serach_title()
     while True:
         start_date = input("\nEnter the first date in the range "
                            "to search for.\nPlease use 'DD/MM/YYYY format: ")
@@ -101,7 +101,6 @@ def search_daterange():
             print("\nSorry '{}' is not in the correct date format. "
                   "Please try again.".format(start_date))
             continue
-
         else:
             utilities.show_add_task_title()
             end_date = input("\nEnter the second date in the range "
@@ -113,18 +112,15 @@ def search_daterange():
                 print("\nSorry '{}' is not in the correct date format. "
                       "Please try again.".format(end_date))
             else:
-                # print(start_date)
-                # print(end_date)
                 range = abs(end_date - start_date)  # convert to a positive
-                print(range)
-                # s = Search()
-                # s.date_search(search_input)
+                s = Search()
+                s.range_search(start_date, end_date, range)
                 break
 
 
 def search_time():
     """Search duration in minutes."""
-    utilities.show_add_task_title()
+    utilities.show_serach_title()
     while True:
         search_input = input("\nEnter the time spent in whole minutes: ")
         try:
@@ -142,7 +138,7 @@ def search_time():
 
 def search_text():
     """Search the text in task name and notes."""
-    utilities.show_add_task_title()
+    utilities.show_serach_title()
     while True:
         search_input = input("\nEnter the text to serach for: ")
         try:
@@ -160,7 +156,7 @@ def search_text():
 
 def search_regex():
     """Search the text in task name using a RegEx pattern."""
-    utilities.show_add_task_title()
+    utilities.show_serach_title()
     while True:
         search_input = input("\nEnter the RegEx pattern to use: ")
         try:

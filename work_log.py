@@ -46,7 +46,7 @@ def check_data():
         search_menu()
     else:
         utilities.show_serach_title()
-        input('\nSorry the work log is empty.\n'
+        input('\nSorry the work log is empty.\n\n'
               'Press ENTER to return to the main menu.')
         main_menu()
 

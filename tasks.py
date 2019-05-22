@@ -1,7 +1,9 @@
 """Tasks."""
 import datetime
+import uuid
 import csv
 import os
+
 
 import utilities
 
@@ -14,6 +16,7 @@ class Task(list):
 
     def __init__(self):
         """Customize the class init."""
+        self.id = None
         self.date = None
         self.name = None
         self.time = None
@@ -85,6 +88,7 @@ class Task(list):
     def add_entry(self):
         """Add the entry to task.csv."""
         fieldnames = [
+            'task_id',
             'task_date',
             'task_name',
             'task_time',
@@ -100,6 +104,7 @@ class Task(list):
             if not file_exists:
                 writer.writeheader()
             writer.writerow({
+                    'task_id': uuid.uuid1(),
                     'task_date': self.date,
                     'task_name': self.name,
                     'task_time': self.time,

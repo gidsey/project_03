@@ -1,5 +1,6 @@
 """Search."""
 import datetime
+import shutil
 import csv
 import re
 # import os
@@ -22,9 +23,9 @@ class Search(list):
         self.results = []
         self.count = 0
         # Read the CSV file and store conetnt in a list
-        with open('tasks.csv', newline='') as csvfile: 
-            taskreader = csv.DictReader(csvfile, delimiter=',')
-            self.dataset = list(taskreader)
+        with open('tasks.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=',')
+            self.dataset = list(reader)
         self.numtasks = len(self.dataset)
 
     def date_search(self, exact_date):
@@ -147,6 +148,21 @@ class Search(list):
 
             if selction.upper() == 'D':
                 print(self.results[self.count])
+                fieldnames = [
+                  'task_date',
+                  'task_name',
+                  'task_time',
+                  'task_notes'
+                ]
+                with open('tasks.csv') as csvfile, open('output.csv', 'w', newline='') as outputfile:
+                    reader = csv.DictReader(csvfile, fieldnames=fieldnames)
+                    writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
+                    for row in reader:   # row, not line !!
+                        writer.writerow({'task_date': row['task_date'],
+                                         'task_name': row['task_name'],
+                                         'task_time': row['task_time'],
+                                         'task_notes': row['task_notes']
+                                         })
                 break
 
             if selction.upper() == 'R':

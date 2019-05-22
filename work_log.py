@@ -49,7 +49,7 @@ def search_menu():
             search_date()
             break
         if selction.upper() == 'B':  # Range search
-            print('B')
+            search_daterange()
             break
         if selction.upper() == 'C':  # Time search
             search_time()
@@ -80,12 +80,46 @@ def search_date():
         except ValueError:
             utilities.show_add_task_title()
             print("\nSorry '{}' is not in the correct date format. "
-                  "Please try again.\n".format(search_input))
+                  "Please try again.".format(search_input))
             continue
         else:
             s = Search()
             s.date_search(search_input)
             break
+
+
+def search_daterange():
+    """Search by date range."""
+    utilities.show_add_task_title()
+    while True:
+        start_date = input("\nEnter the first date in the range "
+                           "to search for.\nPlease use 'DD/MM/YYYY format: ")
+        try:
+            start_date = datetime.datetime.strptime(start_date, fmt)
+        except ValueError:
+            utilities.show_add_task_title()
+            print("\nSorry '{}' is not in the correct date format. "
+                  "Please try again.".format(start_date))
+            continue
+
+        else:
+            utilities.show_add_task_title()
+            end_date = input("\nEnter the second date in the range "
+                             "to search for.\nPlease use 'DD/MM/YYYY format: ")
+            try:
+                end_date = datetime.datetime.strptime(end_date, fmt)
+            except ValueError:
+                utilities.show_add_task_title()
+                print("\nSorry '{}' is not in the correct date format. "
+                      "Please try again.".format(end_date))
+            else:
+                # print(start_date)
+                # print(end_date)
+                range = abs(end_date - start_date)  # convert to a positive
+                print(range)
+                # s = Search()
+                # s.date_search(search_input)
+                break
 
 
 def search_time():

@@ -42,6 +42,12 @@ class Search(list):
                    friendly_date(exact_date)))
             search_menu()
 
+    def range_search(self, range):
+        """Serach accross a date range."""
+
+
+
+
     def time_search(self, duration):
         """Serach for an exact duration match."""
         for row in self.dataset[0:self.numtasks]:
@@ -89,7 +95,6 @@ class Search(list):
                   "'{}'.\n\nPress ENTER to return to the "
                   "search menu.".format(pattern))
             search_menu()
-
 
     def show_results(self):
         """Show the search results."""
@@ -139,4 +144,3 @@ class Search(list):
             else:
                 self.show_results()
                 break
-

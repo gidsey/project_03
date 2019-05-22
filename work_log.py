@@ -1,6 +1,7 @@
 """Work log main file."""
 
 import datetime
+import os
 
 import utilities
 from tasks import Task
@@ -20,7 +21,7 @@ def main_menu():
             add_new_task()
             break
         if selction.upper() == 'B':
-            search_menu()
+            check_data()
             break
         if selction.upper() == 'C':
             utilities.clear_screen()
@@ -36,6 +37,18 @@ def add_new_task():
     """Create a class instance and populate it."""
     t = Task()
     t.add_date()
+
+
+def check_data():
+    """Check whether the CSV file exists."""
+    file_exists = os.path.isfile('tasks.csv')
+    if file_exists:
+        search_menu()
+    else:
+        utilities.show_serach_title()
+        input('\nSorry the work log is empty.\n'
+              'Press ENTER to return to the main menu.')
+        main_menu()
 
 
 def search_menu():

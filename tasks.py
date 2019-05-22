@@ -83,7 +83,7 @@ class Task(list):
                 break
 
     def add_entry(self):
-        """Add the enytr to task.csv."""
+        """Add the entry to task.csv."""
         fieldnames = [
             'task_date',
             'task_name',

@@ -25,6 +25,7 @@ def main_menu():
             break
         if selction.upper() == 'C':
             utilities.clear_screen()
+            # Delete the temp file here (if it exists)
             print('\nThanks for using WORK LOG :)\n')
             break
         else:

@@ -147,22 +147,26 @@ class Search(list):
                 pass
 
             if selction.upper() == 'D':
-                print(self.results[self.count])
+                # print(self.results[self.count]['task_id'])
                 fieldnames = [
+                  'task_id',
                   'task_date',
                   'task_name',
                   'task_time',
                   'task_notes'
                 ]
-                with open('tasks.csv') as csvfile, open('output.csv', 'w', newline='') as outputfile:
+                with open('tasks.csv') as csvfile, open('temp.csv', 'w', newline='') as outputfile:
                     reader = csv.DictReader(csvfile, fieldnames=fieldnames)
                     writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
-                    for row in reader:   # row, not line !!
-                        writer.writerow({'task_date': row['task_date'],
-                                         'task_name': row['task_name'],
-                                         'task_time': row['task_time'],
-                                         'task_notes': row['task_notes']
-                                         })
+                    for row in reader:
+                        if not row['task_id'] == self.results[self.count]['task_id']:
+                            writer.writerow({'task_id': row['task_id'],
+                                             'task_date': row['task_date'],
+                                             'task_name': row['task_name'],
+                                             'task_time': row['task_time'],
+                                             'task_notes': row['task_notes']
+                                             })
+                shutil.move('temp.csv', 'tasks.csv')
                 break
 
             if selction.upper() == 'R':

@@ -43,7 +43,7 @@ def search_menu():
     utilities.show_search_menu_options()
 
     while True:
-        selction = input("\nEnter 'a', 'b', 'c', 'd', 'e' or 'f' > ")
+        selction = input("\nEnter 'a', 'b', 'c', 'd', 'e' or 'r' > ")
 
         if selction.upper() == 'A':  # Date search
             search_date()
@@ -58,9 +58,9 @@ def search_menu():
             search_text()
             break
         if selction.upper() == 'E':  # RegEx search
-            print('E')
+            search_regex()
             break
-        if selction.upper() == 'F':  # Return to menu
+        if selction.upper() == 'R':  # Return to menu
             main_menu()
             break
         else:
@@ -121,6 +121,24 @@ def search_text():
         else:
             s = Search()
             s.text_search(search_input)
+            break
+
+
+def search_regex():
+    """Search the text in task name using a RegEx pattern."""
+    utilities.show_add_task_title()
+    while True:
+        search_input = input("\nEnter the RegEx pattern to use: ")
+        try:
+            search_input = str(search_input)
+        except ValueError:
+            utilities.show_add_task_title()
+            print("\nSorry '{}' is not in the correct format. "
+                  "Please try again.\n".format(search_input))
+            continue
+        else:
+            s = Search()
+            s.pattern_search(search_input)
             break
 
 

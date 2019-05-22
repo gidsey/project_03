@@ -32,5 +32,5 @@ def show_search_menu_options():
     print('b) Range of dates')
     print('c) Time spent')
     print('d) Text search')
-    print('e) RegEx pattern')
-    print('f) [Return to main menu]')
+    print('e) RegEx pattern\nor')
+    print('r) Return to main menu')

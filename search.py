@@ -75,19 +75,19 @@ class Search(list):
 
     def pattern_search(self, pattern):
         """Serach for an exact text match."""
-        expr = re.compile(r'''
-    ^(?P<name>(?P<last>[-\w ]*),\s(?P<first>[-\w ]+))\t$ 
-''', re.X | re.M)
-
-        for match in expr.finditer(self.dataset):
-            self.results.append.append(match)
+        # pattern = "r'" + pattern + "'"
+        for row in self.dataset[0:self.numtasks]:
+            if re.search(pattern, row['task_name']) or \
+                 re.search(pattern, row['task_notes']):
+                self.results.append(row)
         if self.results:
             self.show_results()
         else:
             from work_log import search_menu
             utilities.show_add_task_title()
-            input("\nSorry, there are no tasks listed that match that {}} "
-                  "\n\nPress ENTER to return to the search menu.".format(pattern))
+            input("\nSorry, there are no tasks listed that match the pattern"
+                  "'{}'.\n\nPress ENTER to return to the "
+                  "search menu.".format(pattern))
             search_menu()
 
 

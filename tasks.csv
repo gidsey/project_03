@@ -19,3 +19,5 @@ task_date,task_name,task_time,task_notes
 2019-05-19 00:00:00,Learn Python,60,We're getting there
 2019-05-21 00:00:00,Go for lunch with Will,60,Buy coffee
 1019-05-20 00:00:00,Visit London with Laura,600,Martin Parr!
+1019-05-22 00:00:00,This task is number 8149.,60,RegEx test
+2019-05-22 00:00:00,Unimaginatively titled task,10,This task has a word wth 15 characters included.

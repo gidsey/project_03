@@ -42,12 +42,12 @@ class Search(list):
                    friendly_date(exact_date)))
             search_menu()
 
-    def range_search(self, start_date, end_date, range):
+    def range_search(self, start_date, end_date):
         """Serach accross a date range."""
         for row in self.dataset[0:self.numtasks]:
             task_date = datetime.datetime.strptime(
              row['task_date'], '%Y-%m-%d %H:%M:%S')
-            if start_date - range <= task_date <= start_date + range:
+            if start_date <= task_date <= end_date:
                 self.results.append(row)
         if self.results:
             self.show_results()

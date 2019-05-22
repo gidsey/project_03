@@ -112,9 +112,9 @@ def search_daterange():
                 print("\nSorry '{}' is not in the correct date format. "
                       "Please try again.".format(end_date))
             else:
-                range = abs(end_date - start_date)  # convert to a positive
+                # range = abs(end_date - start_date)  # convert to a positive
                 s = Search()
-                s.range_search(start_date, end_date, range)
+                s.range_search(start_date, end_date)
                 break
 
 

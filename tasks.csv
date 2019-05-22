@@ -23,3 +23,4 @@ task_date,task_name,task_time,task_notes
 2019-05-22 00:00:00,Unimaginatively titled task,10,This task has a word wth 15 characters included.
 1800-01-01 00:00:00,new year's day 1800,24,NYD
 1800-02-01 00:00:00,1 Feb 1800,40,Feb 1800
+6000-01-01 00:00:00,This is in the future,60,Build a rocket

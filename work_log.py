@@ -17,15 +17,14 @@ def main_menu():
     while True:
         selction = input("\nEnter 'a', 'b' or 'c' > ")
 
-        if selction.upper() == 'A':
+        if selction.upper() == 'A': # Add new entry
             add_new_task()
             break
-        if selction.upper() == 'B':
+        if selction.upper() == 'B': # Serach
             check_data()
             break
-        if selction.upper() == 'C':
+        if selction.upper() == 'C': # Quit
             utilities.clear_screen()
-            # Delete the temp file here (if it exists)
             print('\nThanks for using WORK LOG :)\n')
             break
         else:

@@ -55,7 +55,8 @@ class Search(list):
         else:
             from work_log import search_menu
             utilities.show_results_title()
-            input('\nSorry, there are no tasks listed within that date range.\n\n'
+            input('\nSorry, there are no tasks listed '
+                  'within that date range.\n\n'
                   'Press ENTER to return to the search menu.')
             search_menu()
 
@@ -92,7 +93,6 @@ class Search(list):
 
     def pattern_search(self, pattern):
         """Serach for an exact text match."""
-        # pattern = "r'" + pattern + "'"
         for row in self.dataset[0:self.numtasks]:
             if re.search(pattern, row['task_name']) or \
                  re.search(pattern, row['task_notes']):
@@ -132,6 +132,7 @@ class Search(list):
                              '[R]eturn to seach menu > ')
 
             if selction.upper() == 'N':
+                # Show next search result
                 try:
                     self.count += 1
                     self.show_results()
@@ -144,10 +145,12 @@ class Search(list):
                     break
 
             if selction.upper() == 'E':
+                # Edit the entry
                 pass
 
             if selction.upper() == 'D':
-                # print(self.results[self.count]['task_id'])
+                # Delete row from CSV file
+                # Ref: https://tinyurl.com/y4je42ka
                 fieldnames = [
                   'task_id',
                   'task_date',
@@ -155,11 +158,13 @@ class Search(list):
                   'task_time',
                   'task_notes'
                 ]
-                with open('tasks.csv') as csvfile, open('temp.csv', 'w', newline='') as outputfile:
+                with open('tasks.csv') as csvfile, \
+                        open('temp.csv', 'w', newline='') as outputfile:
                     reader = csv.DictReader(csvfile, fieldnames=fieldnames)
                     writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
                     for row in reader:
-                        if not row['task_id'] == self.results[self.count]['task_id']:
+                        if not row['task_id'] == \
+                             self.results[self.count]['task_id']:
                             writer.writerow({'task_id': row['task_id'],
                                              'task_date': row['task_date'],
                                              'task_name': row['task_name'],
@@ -167,9 +172,14 @@ class Search(list):
                                              'task_notes': row['task_notes']
                                              })
                 shutil.move('temp.csv', 'tasks.csv')
+                utilities.show_serach_title()
+                input('Entry deleted successfully.\n\n'
+                      'Press ENTER to return to the serach menu.')
+                search_menu()
                 break
 
             if selction.upper() == 'R':
+                # Return to serach menu
                 search_menu()
                 break
             else:

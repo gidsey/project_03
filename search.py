@@ -213,8 +213,8 @@ class Search(list):
         utilities.show_edit_title()
         self.show_task_detail()
         utilities.show_edit_menu_options()
-        edit_item = input("\nEnter 'a', 'b', 'c' 'd' or 'r': ")
         while True:
+            edit_item = input("\nEnter 'a', 'b', 'c' 'd' or 'r': ")
             if edit_item.upper() == 'A':  # Edit date
                 utilities.show_edit_title()
                 self.show_task_detail()
@@ -247,7 +247,9 @@ class Search(list):
                 from work_log import search_menu
                 search_menu()
                 break
-            else:
+            else:  #  Capture incorrect user input
+                utilities.show_edit_title()
+                self.show_task_detail()
                 utilities.show_edit_menu_options()
                 print("\nSorry, we did not recoginse '{}'"
                       ", please try again.".format(edit_item))

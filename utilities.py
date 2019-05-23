@@ -48,14 +48,18 @@ def show_search_menu_options():
     print('[R]eturn to main menu')
 
 
-def show_edit_menu_options():
-    """Print the edit menu options."""
+def show_edit_title():
+    """Print the edit title."""
     clear_screen()
     print('\nWork Log : Edit Entry'.upper()+'\n'+'-'*22)
+
+
+def show_edit_menu_options():
+    """Print the edit menu options."""
     print('Select the item you wish to edit:\n')
     print('a) Date')
     print('b) Task')
     print('c) Time spent')
     print('c) Notes')
     print('or')
-    print('[R]eturn to serach menu')
+    print('[R]eturn to search menu')

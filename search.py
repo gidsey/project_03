@@ -24,6 +24,9 @@ class Search(list):
         self.count = 0
         self.id = None
         self.date = None
+        self.task = None
+        self.time = None
+        self.notes = None
         # Read the CSV file and store conetnt in a list
         with open('tasks.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=',')
@@ -113,24 +116,32 @@ class Search(list):
         """Show the search results."""
         utilities.show_results_title()
         self.date = datetime.datetime.strptime(
-             self.results[self.count]['task_date'],
-             '%Y-%m-%d %H:%M:%S')
-        f_date = friendly_date(self.date )
-        print('\nResult {} of {}:\n'.format(self.count+1, len(self.results)))
-        print('Date: {}'.format(f_date))
-        print('Task: {}'.format(self.results[self.count]['task_name']))
-        print('Time Spent (minutes): {}'.
-              format(self.results[self.count]['task_time']))
-        print('Notes: {}'.format(self.results[self.count]['task_notes']))
+             self.results[self.count]['task_date'], '%Y-%m-%d %H:%M:%S')
+        self.date = friendly_date(self.date)
+
         self.id = self.results[self.count]['task_id']
+        self.task = self.results[self.count]['task_name']
+        self.time = self.results[self.count]['task_time']
+        self.notes = self.results[self.count]['task_notes']
+
+        print('\nResult {} of {}:'.format(self.count+1, len(self.results)))
+        self.show_task_detail()
         self.show_results_menu()
+
+    def show_task_detail(self):
+        """Output the task detail."""
+        print()
+        print('Date: {}'.format(self.date))
+        print('Task: {}'.format(self.task))
+        print('Time Spent (minutes): {}'.format(self.time))
+        print('Notes: {}'.format(self.notes))
+        print()
 
     def show_results_menu(self):
         """Show the results options."""
         from work_log import search_menu
 
         while True:
-
             selction = input('\n[N]ext, [E]dit, [D]elete, '
                              '[R]eturn to seach menu > ')
 
@@ -186,28 +197,45 @@ class Search(list):
                     search_menu()
                     break
 
-            if selction.upper() == 'R':
-                # Return to serach menu
+            if selction.upper() == 'R':  # Return to serach menu
                 search_menu()
                 break
             else:
-                self.show_results()
-                break
+                utilities.show_results_title()
+                print('\nResult {} of {}:'.format(self.count+1, len(self.results)))
+                self.show_task_detail()
+                print("\nSorry, we did not recoginse '{}'"
+                      ", please try again.".format(selction))
+                continue
 
     def edit_task(self):
         """Edit the task."""
+        utilities.show_edit_title()
+        self.show_task_detail()
         utilities.show_edit_menu_options()
         edit_item = input("\nEnter 'a', 'b', 'c' 'd' or 'r': ")
         while True:
             if edit_item.upper() == 'A':  # Edit date
-                utilities.show_edit_menu_options()
-                print(self.id)
-                print('\nCurrent date is {}'.format(self.date))
-                new_date = input("\nPlease enter new date in 'DD/MM/YYYY format:")
-                print(new_date)
-                break
+                utilities.show_edit_title()
+                self.show_task_detail()
+                new_date = input("\nPlease enter new date "
+                                 "in 'DD/MM/YYYY format: ")
+                try:
+                    new_date = datetime.datetime.strptime(new_date, fmt)
+                except ValueError:
+                    utilities.show_edit_title()
+                    self.show_task_detail()
+                    print("\nSorry '{}' is not in the correct date format. "
+                          "Please try again.\n".format(new_date))
+                    continue
+                else:
+                    print(new_date)
+                    break
             if edit_item.upper() == 'B':  # Edit task
-                utilities.show_edit_menu_options()
+                utilities.show_edit_title()
+                self.show_task_detail()
+                new_task = input("\nPlease enter new task name: ")
+                print(new_task)
                 break
             if edit_item.upper() == 'C':  # Edit time spent
                 utilities.show_edit_menu_options()

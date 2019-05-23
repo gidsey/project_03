@@ -11,6 +11,17 @@ import utilities
 fmt = '%d/%m/%Y'
 
 
+class Edit(list):
+    """Define the Edit class."""
+
+    def __init__(self, id):
+        """Customize the class init."""
+        self.id = id
+
+
+
+
+
 class Task(list):
     """Define the Task class."""
 
@@ -123,3 +134,4 @@ class Task(list):
         print('Time (minutes): = {}'.format(self.time))
         print('Notes: {}'.format(self.notes))
         print()
+

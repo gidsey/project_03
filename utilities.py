@@ -45,4 +45,17 @@ def show_search_menu_options():
     print('c) Time spent')
     print('d) Text search')
     print('e) RegEx pattern\nor')
-    print('r) Return to main menu')
+    print('[R]eturn to main menu')
+
+
+def show_edit_menu_options():
+    """Print the edit menu options."""
+    clear_screen()
+    print('\nWork Log : Edit Entry'.upper()+'\n'+'-'*22)
+    print('Select the item you wish to edit:\n')
+    print('a) Date')
+    print('b) Task')
+    print('c) Time spent')
+    print('c) Notes')
+    print('or')
+    print('[R]eturn to serach menu')

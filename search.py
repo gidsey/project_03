@@ -18,10 +18,12 @@ def friendly_date(datein):
 class Search(list):
     """Define the Search class."""
 
-    def __init__(self, ):
+    def __init__(self):
         """Customize the class init."""
         self.results = []
         self.count = 0
+        self.id = None
+        self.date = None
         # Read the CSV file and store conetnt in a list
         with open('tasks.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=',')
@@ -110,16 +112,17 @@ class Search(list):
     def show_results(self):
         """Show the search results."""
         utilities.show_results_title()
-        f_date = datetime.datetime.strptime(
+        self.date = datetime.datetime.strptime(
              self.results[self.count]['task_date'],
              '%Y-%m-%d %H:%M:%S')
-        f_date = friendly_date(f_date)
+        f_date = friendly_date(self.date )
         print('\nResult {} of {}:\n'.format(self.count+1, len(self.results)))
         print('Date: {}'.format(f_date))
         print('Task: {}'.format(self.results[self.count]['task_name']))
         print('Time Spent (minutes): {}'.
               format(self.results[self.count]['task_time']))
         print('Notes: {}'.format(self.results[self.count]['task_notes']))
+        self.id = self.results[self.count]['task_id']
         self.show_results_menu()
 
     def show_results_menu(self):
@@ -131,8 +134,7 @@ class Search(list):
             selction = input('\n[N]ext, [E]dit, [D]elete, '
                              '[R]eturn to seach menu > ')
 
-            if selction.upper() == 'N':
-                # Show next search result
+            if selction.upper() == 'N':  # Show next search result
                 try:
                     self.count += 1
                     self.show_results()
@@ -144,23 +146,11 @@ class Search(list):
                     search_menu()
                     break
 
-            if selction.upper() == 'E':
-                # Edit the entry
-                edit_item = input('\nSelect the item you wish to edit:\n\n'
-                                  '1) Date\n'
-                                  '2) Task\n'
-                                  '3) Time Spent\n'
-                                  '4) Notes\n'
-                                  'or\n'
-                                  '[R]eturn to the seach menu\n\n'
+            if selction.upper() == 'E':  # Edit the entry
+                self.edit_task()
+                break
 
-                                  "Enter '1', '2', '3' '4' or 'R':"
-                                  )
-
-                print(edit_item)
-
-            if selction.upper() == 'D':
-                # Delete row from CSV file
+            if selction.upper() == 'D':  # Delete row from CSV file
                 # Ref: https://tinyurl.com/y4je42ka
                 confirm = input('\nDelete entry? (Y/N)')
                 if confirm.upper() == 'Y':
@@ -203,3 +193,36 @@ class Search(list):
             else:
                 self.show_results()
                 break
+
+    def edit_task(self):
+        """Edit the task."""
+        utilities.show_edit_menu_options()
+        edit_item = input("\nEnter 'a', 'b', 'c' 'd' or 'r': ")
+        while True:
+            if edit_item.upper() == 'A':  # Edit date
+                utilities.show_edit_menu_options()
+                print(self.id)
+                print('\nCurrent date is {}'.format(self.date))
+                new_date = input("\nPlease enter new date in 'DD/MM/YYYY format:")
+                print(new_date)
+                break
+            if edit_item.upper() == 'B':  # Edit task
+                utilities.show_edit_menu_options()
+                break
+            if edit_item.upper() == 'C':  # Edit time spent
+                utilities.show_edit_menu_options()
+                break
+            if edit_item.upper() == 'D':  # Edit notes
+                utilities.show_edit_menu_options()
+                break
+            if edit_item.upper() == 'R':
+                from work_log import search_menu
+                search_menu()
+                break
+            else:
+                utilities.show_edit_menu_options()
+                print("\nSorry, we did not recoginse '{}'"
+                      ", please try again.".format(edit_item))
+                continue
+
+

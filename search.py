@@ -151,32 +151,37 @@ class Search(list):
             if selction.upper() == 'D':
                 # Delete row from CSV file
                 # Ref: https://tinyurl.com/y4je42ka
-                fieldnames = [
-                  'task_id',
-                  'task_date',
-                  'task_name',
-                  'task_time',
-                  'task_notes'
-                ]
-                with open('tasks.csv') as csvfile, \
-                        open('temp.csv', 'w', newline='') as outputfile:
-                    reader = csv.DictReader(csvfile, fieldnames=fieldnames)
-                    writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
-                    for row in reader:
-                        if not row['task_id'] == \
-                             self.results[self.count]['task_id']:
-                            writer.writerow({'task_id': row['task_id'],
-                                             'task_date': row['task_date'],
-                                             'task_name': row['task_name'],
-                                             'task_time': row['task_time'],
-                                             'task_notes': row['task_notes']
-                                             })
-                shutil.move('temp.csv', 'tasks.csv')
-                utilities.show_serach_title()
-                input('Entry deleted successfully.\n\n'
-                      'Press ENTER to return to the serach menu.')
-                search_menu()
-                break
+                confirm = input('\nDelete entry? (Y/N)')
+                if confirm.upper() == 'Y':
+                    fieldnames = [
+                      'task_id',
+                      'task_date',
+                      'task_name',
+                      'task_time',
+                      'task_notes'
+                    ]
+                    with open('tasks.csv') as csvfile, \
+                            open('temp.csv', 'w', newline='') as outputfile:
+                        reader = csv.DictReader(csvfile, fieldnames=fieldnames)
+                        writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
+                        for row in reader:
+                            if not row['task_id'] == \
+                                 self.results[self.count]['task_id']:
+                                writer.writerow({'task_id': row['task_id'],
+                                                 'task_date': row['task_date'],
+                                                 'task_name': row['task_name'],
+                                                 'task_time': row['task_time'],
+                                                 'task_notes': row['task_notes']
+                                                 })
+                    shutil.move('temp.csv', 'tasks.csv')
+                    utilities.show_serach_title()
+                    input('Entry deleted successfully.\n\n'
+                          'Press ENTER to return to the serach menu.')
+                    search_menu()
+                    break
+                else:
+                    search_menu()
+                    break
 
             if selction.upper() == 'R':
                 # Return to serach menu

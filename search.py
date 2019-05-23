@@ -218,19 +218,21 @@ class Search(list):
             if edit_item.upper() == 'A':  # Edit date
                 utilities.show_edit_title()
                 self.show_task_detail()
-                new_date = input("\nPlease enter new date "
-                                 "in 'DD/MM/YYYY format: ")
-                try:
-                    new_date = datetime.datetime.strptime(new_date, fmt)
-                except ValueError:
-                    utilities.show_edit_title()
-                    self.show_task_detail()
-                    print("\nSorry '{}' is not in the correct date format. "
-                          "Please try again.\n".format(new_date))
-                    continue
-                else:
-                    print(new_date)
-                    break
+                while True:  # this loop needs to be abstracted into a function 
+                # see https://stackoverflow.com/questions/189645/how-to-break-out-of-multiple-loops-in-python
+                    new_date = input("\nPlease enter new date "
+                                     "in 'DD/MM/YYYY format: ")
+                    try:
+                        new_date = datetime.datetime.strptime(new_date, fmt)
+                    except ValueError:
+                        utilities.show_edit_title()
+                        self.show_task_detail()
+                        print("\nSorry '{}' is not in the correct date format. "
+                              "Please try again.".format(new_date))
+                        continue
+                    else:
+                        self.do_edit(new_date)
+                        break
             if edit_item.upper() == 'B':  # Edit task
                 utilities.show_edit_title()
                 self.show_task_detail()
@@ -247,12 +249,18 @@ class Search(list):
                 from work_log import search_menu
                 search_menu()
                 break
-            else:  #  Capture incorrect user input
+            else:  # Capture incorrect user input
                 utilities.show_edit_title()
                 self.show_task_detail()
                 utilities.show_edit_menu_options()
                 print("\nSorry, we did not recoginse '{}'"
                       ", please try again.".format(edit_item))
                 continue
+
+    def do_edit(self, new_date):
+        """Update the CSV with the edited record."""
+        utilities.show_edit_title()
+        print(new_date)
+
 
 

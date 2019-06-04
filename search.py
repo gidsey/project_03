@@ -108,7 +108,7 @@ class Search(list):
             from work_log import search_menu
             utilities.show_results_title()
             input("\nSorry, there are no tasks listed that match the pattern"
-                  "'{}'.\n\nPress ENTER to return to the "
+                  " '{}'.\n\nPress ENTER to return to the "
                   "search menu.".format(pattern))
             search_menu()
 

@@ -19,9 +19,6 @@ class Edit(list):
         self.id = id
 
 
-
-
-
 class Task(list):
     """Define the Task class."""
 
@@ -130,8 +127,7 @@ class Task(list):
     def print_output(self):
         """Show the task on screen."""
         print('\nDate: {}'.format(datetime.datetime.strftime(self.date, fmt)))
-        print('Task: = {}'.format(self.name))
-        print('Time (minutes): = {}'.format(self.time))
+        print('Task: {}'.format(self.name))
+        print('Time (minutes): {}'.format(self.time))
         print('Notes: {}'.format(self.notes))
         print()
-

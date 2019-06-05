@@ -162,36 +162,9 @@ class Search(list):
                 break
 
             if selction.upper() == 'D':  # Delete row from CSV file
-                # Ref: https://tinyurl.com/y4je42ka
                 confirm = input('\nDelete entry? (Y/N)')
                 if confirm.upper() == 'Y':
-                    fieldnames = [
-                      'task_id',
-                      'task_date',
-                      'task_name',
-                      'task_time',
-                      'task_notes'
-                    ]
-                    with open('tasks.csv') as csvfile, \
-                            open('temp.csv', 'w', newline='') as outputfile:
-                        reader = csv.DictReader(csvfile, fieldnames=fieldnames)
-                        writer = csv.DictWriter(outputfile,
-                                                fieldnames=fieldnames)
-                        for row in reader:
-                            if not row['task_id'] == \
-                                 self.results[self.count]['task_id']:
-                                writer.writerow(
-                                    {'task_id': row['task_id'],
-                                     'task_date': row['task_date'],
-                                     'task_name': row['task_name'],
-                                     'task_time': row['task_time'],
-                                     'task_notes': row['task_notes']
-                                     })
-                    shutil.move('temp.csv', 'tasks.csv')
-                    utilities.show_serach_title()
-                    input('Entry deleted successfully.\n\n'
-                          'Press ENTER to return to the serach menu.')
-                    search_menu()
+                    self.do_edit(delete=True)
                     break
                 else:
                     search_menu()
@@ -211,29 +184,14 @@ class Search(list):
     def edit_task(self):
         """Edit the task."""
         utilities.show_edit_title()
-        self.show_task_detail()
-        utilities.show_edit_menu_options()
+        self.show_task_detail()  # Disply the entry to be edited
+        utilities.show_edit_menu_options()  # Ask the user what to change
         while True:
             edit_item = input("\nEnter 'a', 'b', 'c' 'd' or 'r': ")
             if edit_item.upper() == 'A':  # Edit date
-                utilities.show_edit_title()
-                self.show_task_detail()
-                while True:  # this loop needs to be abstracted into a function 
-                # see https://stackoverflow.com/questions/189645/how-to-break-out-of-multiple-loops-in-python
-                    new_date = input("\nPlease enter new date "
-                                     "in 'DD/MM/YYYY format: ")
-                    try:
-                        new_date = datetime.datetime.strptime(new_date, fmt)
-                    except ValueError:
-                        utilities.show_edit_title()
-                        self.show_task_detail()
-                        print("\nSorry '{}' is not in the correct date format. "
-                              "Please try again.".format(new_date))
-                        continue
-                    else:
-                        self.do_edit(new_date)
-                        break
-            if edit_item.upper() == 'B':  # Edit task
+                self.edit_date()
+                break
+            if edit_item.upper() == 'B':  # Edit task name
                 utilities.show_edit_title()
                 self.show_task_detail()
                 new_task = input("\nPlease enter new task name: ")
@@ -257,10 +215,71 @@ class Search(list):
                       ", please try again.".format(edit_item))
                 continue
 
-    def do_edit(self, new_date):
-        """Update the CSV with the edited record."""
+    def edit_date(self):
+        """Edit the task date."""
         utilities.show_edit_title()
-        print(new_date)
+        self.show_task_detail()
+        while True:
+            new_date = input("\nPlease enter new date "
+                             "in 'DD/MM/YYYY format: ")
+            try:
+                new_date = datetime.datetime.strptime(new_date, fmt)
+            except ValueError:
+                utilities.show_edit_title()
+                self.show_task_detail()
+                print("\nSorry '{}' is not in the correct date format. "
+                      "Please try again.".format(new_date))
+                continue
+            else:
+                self.do_edit(date=new_date)
+                break
+
+    def do_edit(self, **kwargs):
+        """Update the CSV with the edited record."""
+        self.delete = False
+        self.date = None
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+        utilities.show_edit_title()
+
+
+        if self.delete:  # Delete the record (https://tinyurl.com/y4je42ka)
+            fieldnames = [
+              'task_id',
+              'task_date',
+              'task_name',
+              'task_time',
+              'task_notes'
+            ]
+            with open('tasks.csv') as csvfile, \
+                    open('temp.csv', 'w', newline='') as outputfile:
+                reader = csv.DictReader(csvfile, fieldnames=fieldnames)
+                writer = csv.DictWriter(outputfile,fieldnames=fieldnames)
+
+                for row in reader:
+                    if not row['task_id'] == self.results[self.count]['task_id']:
+                        writer.writerow(
+                            {'task_id': row['task_id'],
+                             'task_date': row['task_date'],
+                             'task_name': row['task_name'],
+                             'task_time': row['task_time'],
+                             'task_notes': row['task_notes']
+                             })
+            shutil.move('temp.csv', 'tasks.csv')
+            utilities.show_serach_title()
+            input('Entry deleted successfully.\n\n'
+                  'Press ENTER to return to the serach menu.')
+            from work_log import search_menu
+            search_menu()
+
+        elif self.date:  # Update the task date
+            print('new date = {}'.format(self.date))
+
+
+
+
+
 
 
 

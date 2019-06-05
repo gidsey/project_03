@@ -60,6 +60,6 @@ def show_edit_menu_options():
     print('a) Date')
     print('b) Task')
     print('c) Time spent')
-    print('c) Notes')
+    print('d) Notes')
     print('or')
     print('[R]eturn to search menu')

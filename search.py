@@ -195,7 +195,7 @@ class Search(list):
                 self.edit_taskname()
                 break
             if edit_item.upper() == 'C':  # Edit time spent
-                self.edit_date()
+                self.edit_tasktime()
                 break
             if edit_item.upper() == 'D':  # Edit notes
                 self.edit_date()
@@ -236,7 +236,7 @@ class Search(list):
         utilities.show_edit_title()
         self.show_task_detail()
         while True:
-            new_taskname = str(input('\nEnter the new task name '))
+            new_taskname = str(input('\nEnter the new task name: '))
             if new_taskname == '':
                 print("sorry, task name cannot be blank.\n")
                 continue
@@ -244,6 +244,23 @@ class Search(list):
                 self.do_edit(name=new_taskname)
                 break
 
+    def edit_tasktime(self):
+        """Edit the task time."""
+        utilities.show_edit_title()
+        self.show_task_detail()
+        while True:
+            try:
+                new_tasktime = int(input("\nEnter the new amount of time "
+                                         "spent on the task (rounded mins): "))
+            except ValueError:
+                utilities.show_edit_title()
+                self.show_task_detail()
+                print("Error. Please enter the number of minutes "
+                      "as a whole number.\n")
+                continue
+            else:
+                self.do_edit(time=new_tasktime)
+                break
 
     def do_edit(self, **kwargs):
         """Update the CSV with the edited record."""
@@ -339,6 +356,40 @@ class Search(list):
                              'task_date': row['task_date'],
                              'task_name': self.name,
                              'task_time': row['task_time'],
+                             'task_notes': row['task_notes']
+                             })
+                    else:
+                        writer.writerow(
+                            {'task_id': row['task_id'],
+                             'task_date': row['task_date'],
+                             'task_name': row['task_name'],
+                             'task_time': row['task_time'],
+                             'task_notes': row['task_notes']
+                             })
+            shutil.move('temp.csv', 'tasks.csv')
+
+        elif self.time:  # Update the task time
+            status = "updated"
+            fieldnames = [
+              'task_id',
+              'task_date',
+              'task_name',
+              'task_time',
+              'task_notes'
+            ]
+
+            with open('tasks.csv') as csvfile, \
+                    open('temp.csv', 'w', newline='') as outputfile:
+                reader = csv.DictReader(csvfile, fieldnames=fieldnames)
+                writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
+
+                for row in reader:
+                    if row['task_id'] == self.results[self.count]['task_id']:
+                        writer.writerow(
+                            {'task_id': row['task_id'],
+                             'task_date': row['task_date'],
+                             'task_name': row['task_name'],
+                             'task_time': self.time,
                              'task_notes': row['task_notes']
                              })
                     else:

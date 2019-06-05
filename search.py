@@ -243,7 +243,6 @@ class Search(list):
 
         utilities.show_edit_title()
 
-
         if self.delete:  # Delete the record (https://tinyurl.com/y4je42ka)
             fieldnames = [
               'task_id',
@@ -255,7 +254,7 @@ class Search(list):
             with open('tasks.csv') as csvfile, \
                     open('temp.csv', 'w', newline='') as outputfile:
                 reader = csv.DictReader(csvfile, fieldnames=fieldnames)
-                writer = csv.DictWriter(outputfile,fieldnames=fieldnames)
+                writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
 
                 for row in reader:
                     if not row['task_id'] == self.results[self.count]['task_id']:
@@ -274,8 +273,42 @@ class Search(list):
             search_menu()
 
         elif self.date:  # Update the task date
-            print('new date = {}'.format(self.date))
+            # print('new date = {}'.format(self.date))
+            fieldnames = [
+              'task_id',
+              'task_date',
+              'task_name',
+              'task_time',
+              'task_notes'
+            ]
+            with open('tasks.csv') as csvfile, \
+                    open('temp.csv', 'w', newline='') as outputfile:
+                reader = csv.DictReader(csvfile, fieldnames=fieldnames)
+                writer = csv.DictWriter(outputfile, fieldnames=fieldnames)
 
+                for row in reader:
+                    if row['task_id'] == self.results[self.count]['task_id']:
+                        writer.writerow(
+                            {'task_id': row['task_id'],
+                             'task_date': self.date,
+                             'task_name': row['task_name'],
+                             'task_time': row['task_time'],
+                             'task_notes': row['task_notes']
+                             })
+                    else:
+                        writer.writerow(
+                            {'task_id': row['task_id'],
+                             'task_date': row['task_date'],
+                             'task_name': row['task_name'],
+                             'task_time': row['task_time'],
+                             'task_notes': row['task_notes']
+                             })
+            shutil.move('temp.csv', 'tasks.csv')
+            utilities.show_serach_title()
+            input('Entry deleted successfully.\n\n'
+                  'Press ENTER to return to the serach menu.')
+            from work_log import search_menu
+            search_menu()
 
 
 

@@ -29,7 +29,7 @@ def show_results_title():
     print('\nWork Log : Search Results'.upper()+'\n'+'-'*26)
 
 
-def show_serach_title():
+def show_search_title():
     """Print the search title."""
     clear_screen()
     print('\nWork Log : Search'.upper()+'\n'+'-'*18)

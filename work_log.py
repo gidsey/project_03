@@ -20,7 +20,7 @@ def main_menu():
         if selction.upper() == 'A':  # Add new entry
             add_new_task()
             break
-        if selction.upper() == 'B':  # Serach
+        if selction.upper() == 'B':  # search
             check_data()
             break
         if selction.upper() == 'C':  # Quit
@@ -45,14 +45,14 @@ def check_data():
     if file_exists:
         search_menu()
     else:
-        utilities.show_serach_title()
+        utilities.show_search_title()
         input('\nSorry the work log is empty.\n\n'
               'Press ENTER to return to the main menu.')
         main_menu()
 
 
 def search_menu():
-    """Show the serach menu."""
+    """Show the search menu."""
     utilities.show_search_menu_options()
 
     while True:
@@ -84,7 +84,7 @@ def search_menu():
 
 def search_date():
     """Search by exact date."""
-    utilities.show_serach_title()
+    utilities.show_search_title()
     while True:
         search_input = input("\nEnter the date that you wish to search for.\n"
                              "Please use 'DD/MM/YYYY format: ")
@@ -103,7 +103,7 @@ def search_date():
 
 def search_daterange():
     """Search by date range."""
-    utilities.show_serach_title()
+    utilities.show_search_title()
     while True:
         start_date = input("\nEnter the first date in the range "
                            "to search for.\nPlease use 'DD/MM/YYYY format: ")
@@ -136,7 +136,7 @@ def search_daterange():
 
 def search_time():
     """Search duration in minutes."""
-    utilities.show_serach_title()
+    utilities.show_search_title()
     while True:
         search_input = input("\nEnter the time spent in whole minutes: ")
         try:
@@ -154,9 +154,9 @@ def search_time():
 
 def search_text():
     """Search the text in task name and notes."""
-    utilities.show_serach_title()
+    utilities.show_search_title()
     while True:
-        search_input = input("\nEnter the text to serach for: ")
+        search_input = input("\nEnter the text to search for: ")
         try:
             search_input = str(search_input)
         except ValueError:
@@ -172,7 +172,7 @@ def search_text():
 
 def search_regex():
     """Search the text in task name using a RegEx pattern."""
-    utilities.show_serach_title()
+    utilities.show_search_title()
     while True:
         search_input = input("\nEnter the RegEx pattern to use: ")
         try:

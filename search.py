@@ -49,7 +49,7 @@ class Search(list):
             search_menu()
 
     def range_search(self, start_date, end_date):
-        """Serach accross a date range."""
+        """Search across a date range."""
         for row in self.dataset[0:self.numtasks]:
             task_date = datetime.datetime.strptime(
              row['task_date'], '%Y-%m-%d %H:%M:%S')
@@ -66,7 +66,7 @@ class Search(list):
             search_menu()
 
     def time_search(self, duration):
-        """Serach for an exact duration match."""
+        """Search for an exact duration match."""
         for row in self.dataset[0:self.numtasks]:
             if row['task_time'] == str(duration):
                 self.results.append(row)
@@ -81,7 +81,7 @@ class Search(list):
             search_menu()
 
     def text_search(self, text):
-        """Serach for an exact text match."""
+        """Search for an exact text match."""
         for row in self.dataset[0:self.numtasks]:
             if text.lower() in row['task_name'].lower() or \
                     text.lower() in row['task_notes'].lower():
@@ -97,7 +97,7 @@ class Search(list):
             search_menu()
 
     def pattern_search(self, pattern):
-        """Serach for an exact text match."""
+        """Search for an exact text match."""
         for row in self.dataset[0:self.numtasks]:
             if re.search(pattern, row['task_name']) or \
                  re.search(pattern, row['task_notes']):
@@ -170,7 +170,7 @@ class Search(list):
                     search_menu()
                     break
 
-            if selction.upper() == 'R':  # Return to serach menu
+            if selction.upper() == 'R':  # Return to search menu
                 search_menu()
                 break
             else:
@@ -443,8 +443,8 @@ class Search(list):
                              })
             shutil.move('temp.csv', 'tasks.csv')
 
-        utilities.show_serach_title()  # Show the sucess message
+        utilities.show_search_title()  # Show the sucess message
         input('\nEntry {} successfully.\n\n'
-              'Press ENTER to return to the serach menu.'.format(status))
+              'Press ENTER to return to the search menu.'.format(status))
         from work_log import search_menu
         search_menu()

@@ -71,7 +71,7 @@ class Task(list):
                                       "(rounded minutes): "))
             except ValueError:
                 utilities.show_add_task_title()
-                print("Error. Please enter the number of minutes "
+                print("\nError. Please enter the number of minutes "
                       "as a whole number.\n")
                 continue
             else:

@@ -409,7 +409,7 @@ class Search(list):
                              })
             shutil.move('temp.csv', 'tasks.csv')
 
-        elif self.notes:  # Update the task notes
+        elif self.notes or self.notes == '':  # Update the task notes
             status = "updated"
             fieldnames = [
               'task_id',
